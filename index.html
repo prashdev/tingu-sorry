@@ -1,8 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sorry, Tingu</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: single centered column, steps swap in place */
 :root {
@@ -32,139 +36,262 @@
   color-scheme: dark;
 }
 
-* { box-sizing: border-box; }
-html, body { min-height: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { min-height: 100%; }
 body {
+  min-height: 100%;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--body);
   font-size: 17px;
   line-height: 1.55;
-  padding-block: 28px 56px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  margin: 0;
+  padding-top: max(28px, env(safe-area-inset-top, 28px));
+  padding-bottom: max(56px, env(safe-area-inset-bottom, 56px));
+  padding-left: max(16px, env(safe-area-inset-left, 16px));
+  padding-right: max(16px, env(safe-area-inset-right, 16px));
 }
-.wrap { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; position: relative; z-index: 1; }
+
+.wrap {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+  z-index: 1;
+}
 
 body::before {
-  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .16;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .14;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ctext x='14' y='46' font-size='28'%3E%F0%9F%90%A7%3C/text%3E%3Ctext x='74' y='104' font-size='28'%3E%F0%9F%90%A7%3C/text%3E%3C/svg%3E");
   background-size: 120px 120px;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body::before { opacity: .1; } }
-:root[data-theme="dark"] body::before { opacity: .1; }
-.peng { font-size: 60px; line-height: 1; width: fit-content; transform-origin: 50% 100%; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body::before { opacity: .08; } }
+:root[data-theme="dark"] body::before { opacity: .08; }
 
+.peng {
+  font-size: 60px;
+  line-height: 1;
+  width: fit-content;
+  transform-origin: 50% 100%;
+}
+
+/* ── Header ── */
 .top { display: flex; flex-direction: column; gap: 14px; }
-.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
 .progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .progress i { display: block; height: 4px; border-radius: 4px; background: var(--line); transition: background .3s; }
 .progress i.done { background: var(--accent); }
 
-section { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
-h1, h2 { font-family: var(--display); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; margin: 0; outline: none; }
+/* ── Sections ── */
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+h1, h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+  margin: 0;
+  outline: none;
+}
 h1 { font-size: clamp(30px, 9vw, 46px); }
 h2 { font-size: clamp(26px, 7.5vw, 36px); }
 p { margin: 0; max-width: 46ch; }
 .muted { color: var(--muted); }
 
+/* ── Buttons ── */
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font: 600 16px/1 var(--body);
-  min-height: 50px; padding: 0 24px;
-  border-radius: 10px; border: 1.5px solid transparent;
-  background: var(--accent); color: var(--accent-fg);
-  cursor: pointer; align-self: flex-start;
-  transition: transform .15s, opacity .2s;
-  /* Ensure minimum touch target */
+  min-height: 52px;
+  padding: 0 24px;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  background: var(--accent);
+  color: var(--accent-fg);
+  cursor: pointer;
+  align-self: flex-start;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: opacity .15s, transform .15s;
 }
 .btn:hover:not(:disabled) { transform: translateY(-1px); }
-.btn:active:not(:disabled) { transform: translateY(0); opacity: .85; }
-.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn:active:not(:disabled) { opacity: .78; transform: scale(.97); }
+.btn:disabled { opacity: .38; cursor: not-allowed; }
 .btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
-/* On mobile, main action buttons go full width */
+/* full-width on mobile for non-dodge buttons */
 @media (max-width: 480px) {
-  .btn:not(.dodge-btn) { align-self: stretch; text-align: center; }
+  .btn:not(.dodge-btn) {
+    align-self: stretch;
+    width: 100%;
+  }
 }
 
-/* make-up options */
+/* ── Make-up options ── */
 fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .opt {
-  position: relative; display: flex; flex-direction: column; gap: 2px;
-  padding: 14px 16px; border-radius: 12px;
-  background: var(--surface); border: 1.5px solid var(--line);
-  cursor: pointer; transition: border-color .2s, background .2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
   -webkit-tap-highlight-color: transparent;
 }
-.opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-.opt .t { font-weight: 600; }
-.opt .d { font-size: 15px; color: var(--muted); }
+.opt input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.opt .t { font-weight: 600; pointer-events: none; }
+.opt .d { font-size: 15px; color: var(--muted); pointer-events: none; }
 .opt.on { border-color: var(--accent); background: var(--tint); }
 .opt:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-/* forgiveness question */
+/* ── Dodge game ── */
 .dodge {
-  position: relative; height: 190px; border-radius: 14px;
-  border: 1.5px dashed var(--line); overflow: hidden;
+  position: relative;
+  height: 200px;
+  border-radius: 14px;
+  border: 1.5px dashed var(--line);
+  overflow: hidden;
+  touch-action: none;
 }
-.dodge button { position: absolute; }
+.dodge-btn {
+  position: absolute !important;
+  align-self: unset !important;
+  width: auto !important;
+}
 #yes {
-  left: 14px; top: 50%; --s: 1;
+  left: 14px;
+  top: 50%;
+  --s: 1;
   transform: translateY(-50%) scale(var(--s));
-  transform-origin: left center; transition: transform .3s;
+  transform-origin: left center;
+  transition: transform .3s;
 }
 #no {
-  /* start near right edge so it's always reachable on narrow screens */
-  right: 14px; top: 50%; transform: translateY(-50%);
-  background: var(--surface); color: var(--fg); border-color: var(--line);
-  touch-action: none;
-  -webkit-tap-highlight-color: transparent;
+  background: var(--surface);
+  color: var(--fg);
+  border-color: var(--line);
+  /* JS sets left/top — initial position placed by resetDodge() */
 }
-.hint { min-height: 1.6em; color: var(--muted); font-size: 15px; }
+.hint {
+  min-height: 1.6em;
+  color: var(--muted);
+  font-size: 15px;
+}
 
-/* pick-up pass */
-.ticket { background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; overflow: hidden; }
-.ticket .main { padding: 22px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
+/* ── Pick-up pass ── */
+.ticket {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.ticket .main {
+  padding: 22px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 .ticket .head {
-  display: flex; justify-content: space-between; gap: 12px;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--accent);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
   flex-wrap: wrap;
 }
 .ticket h2 { font-size: clamp(24px, 7vw, 32px); }
-.ticket dl { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; margin: 0; }
+.ticket dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+  margin: 0;
+}
 .ticket dl div { min-width: 0; }
-.ticket dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.ticket dd { margin: 2px 0 0; font-weight: 500; font-size: 16px; line-height: 1.35; overflow-wrap: anywhere; }
+.ticket dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ticket dd {
+  margin: 2px 0 0;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
 .ticket dl .wide { grid-column: 1 / -1; }
 .ticket .stub {
-  border-top: 2px dashed var(--line); padding: 14px 20px;
-  background: var(--tint); display: flex; flex-direction: column;
-  gap: 2px; font-size: 15px;
+  border-top: 2px dashed var(--line);
+  padding: 14px 20px;
+  background: var(--tint);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
 }
 .ticket .stub b { font-weight: 600; }
 .ok { color: var(--ok); font-weight: 600; }
 
-/* Single-column ticket on small screens */
 @media (max-width: 380px) {
   .ticket dl { grid-template-columns: 1fr; }
   .ticket dl .wide { grid-column: 1; }
 }
 
+/* ── Animations ── */
 @media (prefers-reduced-motion: no-preference) {
-  section:not([hidden]) { animation: rise .45s ease both; }
-  #s3:not([hidden]) .ticket { animation: slip .7s cubic-bezier(.2,.8,.2,1) both .1s; }
-  #no { transition: left .25s ease, top .25s ease, right .25s ease; }
+  section:not([hidden]) { animation: rise .4s ease both; }
+  #s3:not([hidden]) .ticket { animation: slip .65s cubic-bezier(.2,.8,.2,1) both .08s; }
   .peng { animation: waddle 1.6s ease-in-out infinite; }
   @keyframes waddle { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
   @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   @keyframes slip { from { opacity: 0; transform: translateY(-18px) rotate(-1.5deg); } to { opacity: 1; transform: none; } }
 }
 </style>
-
+</head>
+<body>
 <main class="wrap">
   <div class="top">
     <p class="eyebrow">For Tingu, from me</p>
@@ -183,11 +310,27 @@ fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: colu
     <h2 tabindex="-1">Let me make it up to you, Tingu.</h2>
     <p class="muted">Pick one. I'll take care of the rest.</p>
     <fieldset>
-      <legend class="muted" style="position:absolute;left:-9999px">How I make it up to you</legend>
-      <label class="opt"><input type="radio" name="mk" value="Dinner, your pick"><span class="t">Dinner, your pick</span><span class="d">Any place you like. I'll book it and I'm paying.</span></label>
-      <label class="opt"><input type="radio" name="mk" value="Dessert run tonight"><span class="t">Dessert run tonight</span><span class="d">Whatever you're craving, I'll go and get it.</span></label>
-      <label class="opt"><input type="radio" name="mk" value="A long walk, phones away"><span class="t">A long walk, phones away</span><span class="d">Just us. I'll do the listening.</span></label>
-      <label class="opt"><input type="radio" name="mk" value="Leave it to me"><span class="t">Leave it to me</span><span class="d">I'll plan something good.</span></label>
+      <legend style="position:absolute;left:-9999px" class="muted">How I make it up to you</legend>
+      <label class="opt">
+        <input type="radio" name="mk" value="Dinner, your pick">
+        <span class="t">Dinner, your pick</span>
+        <span class="d">Any place you like. I'll book it and I'm paying.</span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="mk" value="Dessert run tonight">
+        <span class="t">Dessert run tonight</span>
+        <span class="d">Whatever you're craving, I'll go and get it.</span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="mk" value="A long walk, phones away">
+        <span class="t">A long walk, phones away</span>
+        <span class="d">Just us. I'll do the listening.</span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="mk" value="Leave it to me">
+        <span class="t">Leave it to me</span>
+        <span class="d">I'll plan something good.</span>
+      </label>
     </fieldset>
     <button class="btn" id="go1" type="button" disabled>Continue</button>
   </section>
@@ -227,13 +370,13 @@ fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: colu
 
 <script>
 (function () {
-  var steps = Array.prototype.slice.call(document.querySelectorAll('[data-step]'));
-  var bars = Array.prototype.slice.call(document.querySelectorAll('.progress i'));
-  var area = document.getElementById('dodge');
-  var yes = document.getElementById('yes');
-  var no = document.getElementById('no');
-  var hint = document.getElementById('hint');
-  var go1 = document.getElementById('go1');
+  var steps = [].slice.call(document.querySelectorAll('[data-step]'));
+  var bars  = [].slice.call(document.querySelectorAll('.progress i'));
+  var area  = document.getElementById('dodge');
+  var yes   = document.getElementById('yes');
+  var no    = document.getElementById('no');
+  var hint  = document.getElementById('hint');
+  var go1   = document.getElementById('go1');
   var current = 0, dodges = 0, choice = '';
 
   var hints = [
@@ -246,24 +389,30 @@ fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: colu
   ];
   var MAX = 5;
 
+  /* ── Navigation ── */
   function show(n) {
     current = n;
     steps.forEach(function (s, i) { s.hidden = i !== n; });
-    bars.forEach(function (b, i) { b.classList.toggle('done', i <= n); });
-    if (n === 2) { resetDodge(); }
-    if (n === 3) { fillTicket(); }
+    bars.forEach(function (b, i)  { b.classList.toggle('done', i <= n); });
+    if (n === 2) resetDodge();
+    if (n === 3) fillTicket();
     var h = steps[n].querySelector('h1, h2');
-    if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
-    window.scrollTo(0, 0);
+    if (h) { try { h.focus({ preventScroll: true }); } catch(e) {} }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function placeNo() {
-    var a = area.getBoundingClientRect();
-    /* Reset to right-side position after JS takes over left/top */
-    no.style.left = '';
-    no.style.right = '14px';
-    no.style.top = Math.max(0, (a.height - no.offsetHeight) / 2) + 'px';
-    no.style.transform = '';
+  /* ── Dodge logic ── */
+  function noRect()   { return no.getBoundingClientRect(); }
+  function areaRect() { return area.getBoundingClientRect(); }
+
+  /* Place No button at the right edge, vertically centred */
+  function placeNoInitial() {
+    var a = areaRect();
+    var bw = no.offsetWidth  || 72;
+    var bh = no.offsetHeight || 52;
+    no.style.left      = (a.width - bw - 14) + 'px';
+    no.style.top       = Math.max(8, (a.height - bh) / 2) + 'px';
+    no.style.transition = '';
   }
 
   function resetDodge() {
@@ -271,68 +420,83 @@ fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: colu
     no.textContent = 'No';
     yes.style.setProperty('--s', 1);
     hint.textContent = hints[0];
-    /* Reset to CSS-driven position */
-    no.style.left = '';
-    no.style.right = '';
-    no.style.top = '';
-    no.style.transform = '';
-    requestAnimationFrame(placeNo);
+    /* Use rAF so layout is settled and offsetWidth is correct */
+    requestAnimationFrame(placeNoInitial);
   }
 
   function moveNo() {
     if (dodges >= MAX) return;
     dodges++;
     yes.style.setProperty('--s', (1 + dodges * 0.07).toFixed(2));
-    hint.textContent = hints[dodges];
+    hint.textContent = hints[Math.min(dodges, hints.length - 1)];
+
     if (dodges >= MAX) {
       no.textContent = 'Okay, maybe';
-      no.style.right = '';
-      no.style.transform = '';
-      placeNo();
+      placeNoInitial();
       return;
     }
-    var a = area.getBoundingClientRect();
-    var yr = yes.getBoundingClientRect();
-    var maxX = a.width - no.offsetWidth - 8;
-    var maxY = a.height - no.offsetHeight - 8;
+
+    var a   = areaRect();
+    var yr  = yes.getBoundingClientRect();
+    var bw  = no.offsetWidth  || 72;
+    var bh  = no.offsetHeight || 52;
+    var maxX = a.width  - bw - 8;
+    var maxY = a.height - bh - 8;
+    /* Stay right of the Yes button */
     var minX = Math.min(maxX, (yr.right - a.left) + 12);
     var x = minX + Math.random() * Math.max(0, maxX - minX);
-    var y = 8 + Math.random() * Math.max(0, maxY - 8);
-    no.style.right = '';
-    no.style.transform = '';
+    var y = 8   + Math.random() * Math.max(0, maxY - 8);
+
+    /* Animate only after first placement */
+    no.style.transition = 'left .25s ease, top .25s ease';
     no.style.left = x + 'px';
-    no.style.top = y + 'px';
+    no.style.top  = y + 'px';
   }
 
-  no.addEventListener('pointerenter', function (e) {
-    if (e.pointerType === 'mouse' || e.pointerType === 'pen') moveNo();
-  });
-  no.addEventListener('pointerdown', function (e) {
-    if (e.pointerType === 'touch' && dodges < MAX) { e.preventDefault(); moveNo(); }
-  });
+  /* Mouse: dodge on hover */
+  no.addEventListener('mouseenter', moveNo);
+
+  /* Touch: tap = dodge; after MAX taps it fires click naturally */
+  no.addEventListener('touchstart', function (e) {
+    if (dodges < MAX) {
+      e.preventDefault(); /* stop the synthesised click */
+      moveNo();
+    }
+  }, { passive: false });
+
+  /* Click handles both: mouse click & the post-MAX touch tap */
   no.addEventListener('click', function () {
-    if (dodges < MAX) { moveNo(); } else { show(3); }
+    if (dodges >= MAX) show(3);
+    else moveNo();           /* fallback for pen / edge cases */
   });
+
   yes.addEventListener('click', function () { show(3); });
 
   document.getElementById('go0').addEventListener('click', function () { show(1); });
   go1.addEventListener('click', function () { show(2); });
+
   document.getElementById('again').addEventListener('click', function () {
-    var radios = document.querySelectorAll('input[name="mk"]');
-    Array.prototype.forEach.call(radios, function (r) { r.checked = false; r.parentNode.classList.remove('on'); });
-    choice = ''; go1.disabled = true; show(0);
+    [].forEach.call(document.querySelectorAll('input[name="mk"]'), function (r) {
+      r.checked = false;
+      r.closest('.opt').classList.remove('on');
+    });
+    choice = '';
+    go1.disabled = true;
+    show(0);
   });
 
-  Array.prototype.forEach.call(document.querySelectorAll('input[name="mk"]'), function (r) {
+  /* Radio options */
+  [].forEach.call(document.querySelectorAll('input[name="mk"]'), function (r) {
     r.addEventListener('change', function () {
       choice = r.value;
-      Array.prototype.forEach.call(document.querySelectorAll('.opt'), function (o) {
+      [].forEach.call(document.querySelectorAll('.opt'), function (o) {
         o.classList.toggle('on', o.contains(r) && r.checked);
       });
       go1.disabled = false;
     });
   });
 
+  /* Ticket fill */
   function fillTicket() {
     document.getElementById('perk').textContent = choice || 'Leave it to me';
     var d;
@@ -342,6 +506,10 @@ fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: colu
     document.getElementById('issued').textContent = d;
   }
 
-  window.addEventListener('resize', function () { if (current === 2 && dodges === 0) placeNo(); });
+  window.addEventListener('resize', function () {
+    if (current === 2 && dodges === 0) placeNoInitial();
+  });
 })();
 </script>
+</body>
+</html>
